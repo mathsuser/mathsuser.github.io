@@ -87,5 +87,6 @@ For the uniform case $q=\pi r^2/(4a^2)$, so
 $$\mathbb{P}(Y=1) = \eta + (1-2\eta)\frac{\pi r^2}{4a^2}.$$
 
 For the Gaussian case $q=1-\exp(-r^2/(2\sigma^2))$, so
-$$\mathbb{P}(Y=1) = \eta + (1-2\eta)\left(1- e^{-r^2/(2\sigma^2)}\right).$$
+$$\mathbb{P}(Y=1) = \eta + (1-2\eta)\left(1- e^{-r^2/(2\sigma^2)}\right).$$ 
+
 

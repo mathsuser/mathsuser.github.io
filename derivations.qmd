@@ -4,4 +4,4 @@ This page collects short derivations and calculations written while working thro
 
 ## Notes
 
-- [001. A Toy Nonlinear Classification Model with a Radial Boundary](derivations/001-radial-boundary-toy-classification.md)
+- [001. A Toy Nonlinear Classification Model with a Radial Boundary](derivations/001-radial-boundary-toy-classification.qmd)

@@ -1,0 +1,51 @@
+[
+  {
+    "objectID": "derivations.html",
+    "href": "derivations.html",
+    "title": "Derivations",
+    "section": "",
+    "text": "This page collects short derivations and calculations written while working through mathematical questions.\n\n\n\n001. A Toy Nonlinear Classification Model with a Radial Boundary"
+  },
+  {
+    "objectID": "derivations.html#notes",
+    "href": "derivations.html#notes",
+    "title": "Derivations",
+    "section": "",
+    "text": "001. A Toy Nonlinear Classification Model with a Radial Boundary"
+  },
+  {
+    "objectID": "derivations/001-radial-boundary-toy-classification.html",
+    "href": "derivations/001-radial-boundary-toy-classification.html",
+    "title": "001 — A Radial Decision Boundary for a Toy Classification Model",
+    "section": "",
+    "text": "← Back to derivations\n31 May 2026\nA placeholder file for derivations and notes on the radial-boundary toy classification problem."
+  },
+  {
+    "objectID": "derivations/001-radial-boundary-toy-classification.html#questions",
+    "href": "derivations/001-radial-boundary-toy-classification.html#questions",
+    "title": "001 — A Radial Decision Boundary for a Toy Classification Model",
+    "section": "Questions",
+    "text": "Questions\n\nWhat is the probability that a random point \\(X=(X_1,X_2)\\), distributed according to a distribution \\(P_X\\) centered at the origin, lies within the Euclidean ball \\[ \\mathcal B_2(0,r) = \\{x\\in\\mathbb R^2:\\|x\\|_2\\le r\\} \\] in the following cases?\n\n\n\\(P_X\\) is the uniform distribution on the square \\([-a,a]^2\\), with independent coordinates, for some \\(a&gt;r\\ge 0\\).\n\\(P_X\\) is the bivariate normal distribution \\(\\mathcal N(0,\\sigma^2 I_2)\\), for some \\(\\sigma&gt;0\\).\n\n\nConsider the following binary classification model. Let \\(f(X)=\\mathbf 1_{\\{X\\in \\mathcal B_2(0,r)\\}}.\\) The observed label \\(Y\\) is defined by \\[ Y = \\begin{cases}\n   f(X), & \\text{with probability } 1-\\eta,\\\\\n   1-f(X), & \\text{with probability } \\eta.\n   \\end{cases} \\]\n\n\nWhat is the probability that \\(Y=1\\) in this model for the cases considered in Question 1?"
+  },
+  {
+    "objectID": "derivations/001-radial-boundary-toy-classification.html#derivation",
+    "href": "derivations/001-radial-boundary-toy-classification.html#derivation",
+    "title": "001 — A Radial Decision Boundary for a Toy Classification Model",
+    "section": "Derivation",
+    "text": "Derivation\n\n1. Probability of the ball event\nThe following two cases assume the noiseless setting where the label is the indicator of membership in the ball: \\(Y = \\mathbf{1}_{X \\in \\mathcal B_2(0,r)}\\).\n\nUniform distribution on ([-a,a]^2).\n\nSince \\(X_1\\) and \\(X_2\\) are independent and uniformly distributed on \\([-a,a]\\), the joint density function of \\(X\\) is given by \\[f_X(x_1,x_2) = \\frac{1}{4a^2} \\quad \\text{for } (x_1,x_2) \\in [-a,a]^2\\] and \\(f_X(x_1,x_2) = 0\\) otherwise.The probability that \\(X\\) lies within the ball \\(\\mathcal B_2(0,r)\\) is given by the integral of the density function over the region defined by the ball:\n\\[\\begin{align*}\n\\mathbb{P}(Y=1) &= \\int_{\\mathcal B_2(0,r)} f_X(x_1,x_2) , dx_1 dx_2 \\\\\\\n&= \\int_{x_1=-a}^{a} \\int_{x_2=-a}^{a} \\frac{1}{4a^2} \\mathbf{1}_{x_1^2 + x_2^2 \\le r^2} , dx_1 dx_2 \\\\\\\n&= \\int_0^{2\\pi} \\int_0^r \\frac{1}{4a^2} \\rho , d\\rho d\\theta \\\\\\\n&= \\frac{\\pi r^2}{4a^2}.\n\\end{align*}\\]\nGeometric interpretation: The probability \\(\\mathbb{P}(Y=1)\\) can be interpreted as the ratio of the area of the circle defined by the ball \\(\\mathcal B_2(0,r)\\) to the area of the square \\([-a,a]^2\\). The area of the circle is \\(\\pi r^2\\) and the area of the square is \\(4a^2\\), hence the probability is \\(\\frac{\\pi r^2}{4a^2}\\). More precisely,\n\\[\\begin{align*}\\mathbb{P}(Y=1) &= \\frac{\\lambda(\\mathcal B_2(0,r) \\cap [-a,a]^2)}{\\lambda([-a,a]^2)} \\\\\\\n&= \\frac{\\pi r^2}{4a^2},\\end{align*}\\] where \\(\\lambda\\) denotes the Lebesgue measure on \\(\\mathbb{R}^2\\).\n\nBivariate normal distribution \\(\\mathcal N(0,\\sigma^2 I_2)\\).\n\nLet \\(X \\sim \\mathcal{N}(0, \\sigma^2 I_2)\\). The probability that \\(X\\) lies within the ball \\(\\mathcal B_2(0,r)\\) is given by \\[\\mathbb{P}(Y=1) = \\mathbb{P}(\\|X\\|_2 \\le r) = \\mathbb{P}\\left(\\frac{\\|X\\|_2^2}{\\sigma^2} \\le \\frac{r^2}{\\sigma^2}\\right).\\]\nSince \\(\\frac{\\|X\\|_2^2}{\\sigma^2} = \\frac{X_1^2 + X_2^2}{\\sigma^2}\\) follows a chi-squared distribution with 2 degrees of freedom, we have\n\\[\\mathbb{P}(Y=1) = F_{\\chi^2_2}\\left(\\frac{r^2}{\\sigma^2}\\right),\\]\nwhere \\(F_{\\chi^2_2}\\) is the cumulative distribution function of the chi-squared distribution with 2 degrees of freedom.\nThe other calculation approach is the same as in case 1, but with the density function of the bivariate normal distribution: \\[f_X(x_1,x_2) = \\frac{1}{2\\pi\\sigma^2} \\exp\\left(-\\frac{x_1^2 + x_2^2}{2\\sigma^2}\\right).\\] The probability can be computed as \\[\\begin{align*}\\mathbb{P}(Y=1) &= \\int_{\\mathcal B_2(0,r)} f_X(x_1,x_2) , dx_1 dx_2 \\\\\\\n&= \\int_0^{2\\pi} \\int_0^r \\frac{1}{2\\pi\\sigma^2} \\exp\\left(-\\frac{\\rho^2}{2\\sigma^2}\\right) \\rho , d\\rho d\\theta \\\\\\\n&= 1 - \\exp\\left(-\\frac{r^2}{2\\sigma^2}\\right).\\end{align*}\\]\n\n\n2. Noisy model — label noise \\(\\eta\\)\nThe following assumes the noisy label model described in Question 2: with probability \\(1-\\eta\\) the label equals \\(f(X)=\\mathbf{1}_{X\\in\\mathcal B_2(0,r)}\\), and with probability \\(\\eta\\) it is flipped.\n\nRecall the noiseless (true) label is \\(Y_0=1\\) when \\(X\\in\\mathcal B_2(0,r)\\) and \\(Y_0=0\\) otherwise. In the noisy case, the observed label equals the true label with probability \\((1-\\eta)\\) and is flipped with probability \\(\\eta\\). Hence \\[p(x) := \\mathbb{P}(Y=1 \\mid X=x) = (1-\\eta)f(x) + \\eta (1-f(x)).\\]\nIntegrating over \\(X\\) gives\n\n\\[\\begin{aligned}\\mathbb{P}(Y=1) &= \\int_{\\mathbb{R}^2} \\mathbb{P}(Y=1 \\mid X=x) f_X(x) , dx \\\\\\\n&= (1-\\eta)\\int f(x)f_X(x) ,dx + \\eta\\int (1-f(x))f_X(x) ,dx.\n\\end{aligned}\\]\nLet \\(q=\\mathbb{P}(X\\in\\mathcal B_2(0,r))\\). Then the above simplifies to \\[\\mathbb{P}(Y=1) = (1-\\eta) q + \\eta (1-q) = \\eta + (1-2\\eta)q.\\]\nFor the uniform case \\(q=\\pi r^2/(4a^2)\\), so\n\\[\\mathbb{P}(Y=1) = \\eta + (1-2\\eta)\\frac{\\pi r^2}{4a^2}.\\]\nFor the Gaussian case \\(q=1-\\exp(-r^2/(2\\sigma^2))\\), so \\[\\mathbb{P}(Y=1) = \\eta + (1-2\\eta)\\left(1- e^{-r^2/(2\\sigma^2)}\\right).\\]"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Working Notes",
+    "section": "",
+    "text": "This is a public archive for working notes, proof reconstructions, derivations, and research fragments.\nCurrent focus: covariance estimation, statistical decision theory, quantitative finance, and related mathematical questions.\n\n\n\nDerivations"
+  },
+  {
+    "objectID": "index.html#sections",
+    "href": "index.html#sections",
+    "title": "Working Notes",
+    "section": "",
+    "text": "Derivations"
+  }
+]

@@ -6,4 +6,4 @@ Current focus: covariance estimation, statistical decision theory, quantitative 
 
 ## Sections
 
-- [Derivations](derivations.md)
+- [Derivations](derivations.qmd)

@@ -1,0 +1,91 @@
+---
+title: "001 — A Radial Decision Boundary for a Toy Classification Model"
+date: 2026-05-31
+---
+
+[← Back to derivations](../derivations.qmd)
+
+*31 May 2026*
+
+A placeholder file for derivations and notes on the radial-boundary toy classification problem.
+
+## Questions
+
+1. What is the probability that a random point $X=(X_1,X_2)$, distributed according to a distribution $P_X$ centered at the origin, lies within the Euclidean ball $$ \mathcal B_2(0,r) = \{x\in\mathbb R^2:\|x\|_2\le r\} $$ in the following cases?
+- $P_X$ is the uniform distribution on the square $[-a,a]^2$, with independent coordinates, for some $a>r\ge 0$.
+- $P_X$ is the bivariate normal distribution $\mathcal N(0,\sigma^2 I_2)$, for some $\sigma>0$.
+
+2. Consider the following binary classification model. Let $f(X)=\mathbf 1_{\{X\in \mathcal B_2(0,r)\}}.$ The observed label $Y$ is defined by
+$$ Y = \begin{cases}
+      f(X), & \text{with probability } 1-\eta,\\
+      1-f(X), & \text{with probability } \eta.
+      \end{cases} $$
+ - What is the probability that $Y=1$ in this model for the cases considered in Question 1?
+
+
+## Derivation
+
+### 1. Probability of the ball event
+
+The following two cases assume the noiseless setting where the label is the indicator of membership in the ball: $Y = \mathbf{1}_{X \in \mathcal B_2(0,r)}$.
+
+- **Uniform distribution on \([-a,a]^2\).**
+
+Since $X_1$ and $X_2$ are independent and uniformly distributed on $[-a,a]$, the joint density function of $X$ is given by 
+$$f_X(x_1,x_2) = \frac{1}{4a^2} \quad \text{for } (x_1,x_2) \in [-a,a]^2$$ 
+and $f_X(x_1,x_2) = 0$ otherwise.The probability that $X$ lies within the ball $\mathcal B_2(0,r)$ is given by the integral of the density function over the region defined by the ball:
+
+$$\begin{align*}
+\mathbb{P}(Y=1) &= \int_{\mathcal B_2(0,r)} f_X(x_1,x_2) , dx_1 dx_2 \\\
+&= \int_{x_1=-a}^{a} \int_{x_2=-a}^{a} \frac{1}{4a^2} \mathbf{1}_{x_1^2 + x_2^2 \le r^2} , dx_1 dx_2 \\\ 
+&= \int_0^{2\pi} \int_0^r \frac{1}{4a^2} \rho , d\rho d\theta \\\
+&= \frac{\pi r^2}{4a^2}.
+\end{align*}$$
+
+**Geometric interpretation:** The probability $\mathbb{P}(Y=1)$ can be interpreted as the ratio of the area of the circle defined by the ball $\mathcal B_2(0,r)$ to the area of the square $[-a,a]^2$. The area of the circle is $\pi r^2$ and the area of the square is $4a^2$, hence the probability is $\frac{\pi r^2}{4a^2}$. More precisely,
+
+$$\begin{align*}\mathbb{P}(Y=1) &= \frac{\lambda(\mathcal B_2(0,r) \cap [-a,a]^2)}{\lambda([-a,a]^2)} \\\
+&= \frac{\pi r^2}{4a^2},\end{align*}$$
+where $\lambda$ denotes the Lebesgue measure on $\mathbb{R}^2$.
+
+- **Bivariate normal distribution $\mathcal N(0,\sigma^2 I_2)$.**
+
+Let $X \sim \mathcal{N}(0, \sigma^2 I_2)$. The probability that $X$ lies within the ball $\mathcal B_2(0,r)$ is given by
+$$\mathbb{P}(Y=1) = \mathbb{P}(\|X\|_2 \le r) = \mathbb{P}\left(\frac{\|X\|_2^2}{\sigma^2} \le \frac{r^2}{\sigma^2}\right).$$
+
+Since $\frac{\|X\|_2^2}{\sigma^2} = \frac{X_1^2 + X_2^2}{\sigma^2}$ follows a chi-squared distribution with 2 degrees of freedom, we have
+
+$$\mathbb{P}(Y=1) = F_{\chi^2_2}\left(\frac{r^2}{\sigma^2}\right),$$
+
+where $F_{\chi^2_2}$ is the cumulative distribution function of the chi-squared distribution with 2 degrees of freedom.
+
+The other calculation approach is the same as in case 1, but with the density function of the bivariate normal distribution:
+$$f_X(x_1,x_2) = \frac{1}{2\pi\sigma^2} \exp\left(-\frac{x_1^2 + x_2^2}{2\sigma^2}\right).$$
+The probability can be computed as
+$$\begin{align*}\mathbb{P}(Y=1) &= \int_{\mathcal B_2(0,r)} f_X(x_1,x_2) , dx_1 dx_2 \\\
+&= \int_0^{2\pi} \int_0^r \frac{1}{2\pi\sigma^2} \exp\left(-\frac{\rho^2}{2\sigma^2}\right) \rho , d\rho d\theta \\\
+&= 1 - \exp\left(-\frac{r^2}{2\sigma^2}\right).\end{align*}$$
+
+### 2. Noisy model — label noise $\eta$
+
+The following assumes the noisy label model described in Question 2: with probability $1-\eta$ the label equals $f(X)=\mathbf{1}_{X\in\mathcal B_2(0,r)}$, and with probability $\eta$ it is flipped.
+
+- Recall the noiseless (true) label is $Y_0=1$ when $X\in\mathcal B_2(0,r)$ and $Y_0=0$ otherwise. In the noisy case, the observed label equals the true label with probability $(1-\eta)$ and is flipped with probability $\eta$. Hence 
+$$p(x) := \mathbb{P}(Y=1 \mid X=x) = (1-\eta)f(x) + \eta (1-f(x)).$$
+
+- Integrating over $X$ gives
+
+$$\begin{aligned}\mathbb{P}(Y=1) &= \int_{\mathbb{R}^2} \mathbb{P}(Y=1 \mid X=x) f_X(x) , dx \\\
+&= (1-\eta)\int f(x)f_X(x) ,dx + \eta\int (1-f(x))f_X(x) ,dx.
+\end{aligned}$$
+
+Let $q=\mathbb{P}(X\in\mathcal B_2(0,r))$. Then the above simplifies to 
+$$\mathbb{P}(Y=1) = (1-\eta) q + \eta (1-q) = \eta + (1-2\eta)q.$$
+
+For the uniform case $q=\pi r^2/(4a^2)$, so 
+
+$$\mathbb{P}(Y=1) = \eta + (1-2\eta)\frac{\pi r^2}{4a^2}.$$
+
+For the Gaussian case $q=1-\exp(-r^2/(2\sigma^2))$, so
+$$\mathbb{P}(Y=1) = \eta + (1-2\eta)\left(1- e^{-r^2/(2\sigma^2)}\right).$$
+

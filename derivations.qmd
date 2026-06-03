@@ -5,3 +5,4 @@ This page collects short derivations and calculations written while working thro
 ## Notes
 
 - [001. A Toy Nonlinear Classification Model with a Radial Boundary](derivations/001-radial-boundary-toy-classification.qmd)
+- [002. Deriving the Bayes Classifier under 0–1 Loss](derivations/002-bayes-classifier-zero-one-loss.qmd)
